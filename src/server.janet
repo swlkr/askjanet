@@ -5,8 +5,8 @@
 
 (def app (as-> routes/app ?
                (handler ?)
-               (layout ? layout/app)
-               (logger ?)
+               (layout ? layout/layout)
+               (not-found ?)
                (csrf-token ?)
                (session ?)
                (extra-methods ?)
@@ -14,7 +14,8 @@
                (body-parser ?)
                (server-error ?)
                (x-headers ?)
-               (static-files ?)))
+               (static-files ?)
+               (logger ?)))
 
 
 (defn start [port]
@@ -22,6 +23,6 @@
               (or port
                   (env :port)
                   "8000"))]
-    (db/connect)
+    (db/connect (env :database-url))
     (server app port) # stops listening on SIGINT
     (db/disconnect)))
