@@ -21,4 +21,4 @@
   (do
     (os/shell "pkill -xf 'janet main.janet'")
     (os/shell "janet main.janet &")
-    (os/shell "fswatch -o src | xargs -n1 -I{} ./watch")))
+    (os/shell "fswatch -m poll_monitor -o src | xargs -n1 -I{} ./watch")))
