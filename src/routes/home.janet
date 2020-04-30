@@ -1,11 +1,47 @@
 (import joy :prefix "")
+(import ../helpers :prefix "")
+
 
 (defn index [request]
-  [:div {:class "tc"}
-   [:h1 "You found joy!"]
-   [:p {:class "code"}
-    [:b "Joy Version:"]
-    [:span (string " " version)]]
-   [:p {:class "code"}
-    [:b "Janet Version:"]
-    [:span janet/version]]])
+  (let [questions (db/fetch-all [:question])
+        all-accounts (group-by :account-id (db/fetch-all [:account]))
+        account (request :account)
+        all-votes (group-by :question-id (db/fetch-all [:vote]))
+        all-answers (group-by :question-id (db/fetch-all [:answer]))]
+    [:vstack {:spacing "l"}
+     [:hstack {:stretch ""}
+      [:spacer]
+      [:a {:href "/questions/new"}
+       [:button "Ask a question"]]]
+     (foreach [q questions]
+       (let [votes (get all-votes (q :id) [])
+             answers (get all-answers (q :id) [])]
+         [:hstack {:spacing "m"
+                   :x-data (string/format "voter('/api/questions/%d/votes', %s, %d)" (q :id) (if (empty? votes) "false" "true") (length votes))}
+          [:vstack {:align-x "center" :align-y "top"}
+           [:a {:href "#"
+                :@click.prevent "vote()"
+                :tabindex "0"
+                :role "button"
+                :aria-label "upvote"}
+             [:span {:x-show "!voted"}
+              (svg "caret-up")]
+             [:span {:x-show "voted"}
+              (svg "caret-up-fill")]]
+           [:div {:x-text "votes"}]]
+          [:aside {:stretch ""}
+           [:vstack {:spacing "s" :stretch ""}
+            [:h2 {:style "margin-top: 0" :responsive ""}
+             [:a {:href (string "/questions/" (q :id))}
+              (q :title)]]
+            [:vstack {:align-y "bottom" :spacing "xs"}
+             [:hstack {:spacing "l"}
+              [:hstack {:spacing "xs"}
+               [:div (length answers)]
+               [:strong "answers"]]
+              [:hstack {:spacing "xs"}
+               [:div {:x-text "votes"} (length votes)]
+               [:strong "upvotes"]]]
+             [:hstack {:spacing "xs"}
+              [:div (datestring (q :created-at))]
+              [:div (get-in all-accounts [(q :account-id) :name])]]]]]]))]))

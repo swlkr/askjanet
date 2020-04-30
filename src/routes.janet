@@ -1,5 +1,9 @@
 (import joy :prefix "")
-(import ./routes/home :as home)
 
 (defroutes app
-  [:get "/" home/index])
+  [:get "/" :home/index]
+  [:get "/check-your-email" :auth-code/success]
+  [:get "/sign-in" :auth-code/new]
+  [:post "/auth-codes" :auth-code/create])
+  # [:get "/join" :account/new]
+  # [:post "/accounts" :account/create])
