@@ -66,12 +66,10 @@
        [:meta {:name "csrf-token" :content (authenticity-token request)}]
        [:meta {:charset "utf-8"}]
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
-       [:link {:href "/pylon.css" :rel "stylesheet"}]
-       [:link {:href "/app.css" :rel "stylesheet"}]
-       [:script {:src "/alpine.js"}]]
+       (css "/pylon.css" "/app.css")]
       [:body {:@keydown.escape.prevent "modalOpen = false"}
         (menu request)
         body
        (confirm-modal request)
        [:div {:class "md-overlay" ::class "{'md-show': modalOpen}"}]
-       [:script {:src "/app.js"}]]])))
+       (js "/alpine.js" "/app.js")]])))
