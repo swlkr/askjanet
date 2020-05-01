@@ -2,12 +2,11 @@
 (import codec)
 (import uri)
 (import json)
-(import dotenv)
+(import joy :prefix "")
 
-
-(def base-url (dotenv/env :mailgun-base-url))
-(def mailgun-domain (dotenv/env :mailgun-domain))
-(def headers {"Authorization" (string "Basic " (codec/encode (string "api:" (dotenv/env :mailgun-api-key))))})
+(def base-url (env :mailgun-base-url))
+(def mailgun-domain (env :mailgun-domain))
+(def headers {"Authorization" (string "Basic " (codec/encode (string "api:" (env :mailgun-api-key))))})
 
 
 (defn contains? [arr val]
