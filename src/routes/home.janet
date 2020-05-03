@@ -3,9 +3,9 @@
 
 
 (defn index [request]
-  (let [questions (db/fetch-all [:question])
-        all-accounts (group-by :account-id (db/fetch-all [:account]))
-        account (request :account)
+  (let [account (request :account)
+        questions (db/fetch-all [:question])
+        all-accounts (group-by :id (db/fetch-all [:account]))
         all-votes (group-by :question-id (db/fetch-all [:vote]))
         all-answers (group-by :question-id (db/fetch-all [:answer]))]
     [:vstack {:spacing "l"}

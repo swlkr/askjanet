@@ -1,6 +1,7 @@
 (use joy)
+(use ../helpers)
+
 (import cipher)
-(import ../helpers :prefix "")
 (import ../mailgun)
 
 
@@ -33,15 +34,6 @@
                            :to email
                            :subject "Sign back in to askjanet"
                            :text text})))
-
-
-(defn- auth-code []
-  (string (cipher/bin2hex (os/cryptorand 8))))
-
-
-(defn- auth-code-params []
-  {:code (auth-code)
-   :code-expires-at (+ 600 (os/time))})
 
 
 (defn create [request]

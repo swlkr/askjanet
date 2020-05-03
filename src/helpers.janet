@@ -1,9 +1,19 @@
 (use joy)
+(import cipher)
 
 
 (def domain "askjanet.xyz")
 (def from-email "askjanet <sean@askjanet.xyz>")
 (def base-url (if development? "http://localhost:8080/" "https://askjanet.xyz/"))
+
+
+(defn auth-code []
+  (string (cipher/bin2hex (os/cryptorand 8))))
+
+
+(defn auth-code-params []
+  {:code (auth-code)
+   :code-expires-at (+ 600 (os/time))})
 
 
 (defn url [& str]

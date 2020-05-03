@@ -13,7 +13,7 @@
        [:a {:href "/profile"
             :role "button"}
         "Profile"]
-       (form-with request {:method "POST" :action "/logout"}
+       (form-for [request :session/destroy]
          [:input {:type "submit" :value "Sign out"}])
        [:a {:href "javascript://" :@click "toggleColorScheme()"
             :role "button"}

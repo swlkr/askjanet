@@ -3,10 +3,18 @@
 (import ./routes :as routes)
 
 
+(defn current-account [handler]
+  (fn [request]
+    (def id (get-in request [:session :account :id]))
+    (def account (db/find :account id))
+    (handler (put request :account account))))
+
+
 (def app (as-> routes/app ?
                (handler ?)
                (layout ? layout/layout)
                (not-found ?)
+               (current-account ?)
                (csrf-token ?)
                (session ?)
                (extra-methods ?)
