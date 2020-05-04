@@ -65,3 +65,8 @@
 
 (defn pluck [k dicts]
   (map |(get $ k) dicts))
+
+
+(defn markdown/escape [str]
+  (->> (string/replace-all "<" "&lt;" str)
+       (string/replace-all ">" "&gt;")))
