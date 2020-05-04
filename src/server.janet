@@ -5,7 +5,7 @@
 
 (defn current-account [handler]
   (fn [request]
-    (def id (get-in request [:session :account :id]))
+    (def id (get-in request [:session :account :id] 0))
     (def account (db/find :account id))
     (handler (put request :account account))))
 
