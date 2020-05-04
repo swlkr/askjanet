@@ -7,7 +7,8 @@
 (defn new [request]
   [:vstack {:spacing "l" :align-x "center"}
     [:spacer]
-    [:img {:src "/start_up.svg" :style "width: 300px"}]
+    [:div {:style "width: 300px"}
+     (svg "start_up")]
     [:div {:id "form" :x-data "signupForm()" :style "width: 100%; max-width: 450px"}
      (form-for [request :account/create]
       [:vstack {:spacing "m"}
