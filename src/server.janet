@@ -22,8 +22,8 @@
                (body-parser ?)
                (server-error ?)
                (x-headers ?)
-               (static-files ?)
-               (logger ?)))
+               (logger ?)
+               (static-files ?)))
 
 
 (defn start [port]
