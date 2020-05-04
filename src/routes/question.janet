@@ -87,13 +87,13 @@
        [:vstack {:spacing "l"}
         [:vstack {:spacing "xs"}
          [:label {:for "title"} "title"]
-         [:input {:type "text" :name "title" :value (question :title)}]
+         [:input {:type "text" :name "title" :value (get question :title)}]
          [:div (get-in request [:errors :title])]]
 
         [:vstack {:spacing "xs"}
          [:label {:for "body"} "body"]
          [:textarea {:rows 10 :name "body"}
-          (question :body)]]
+          (get question :body)]]
 
         [:button {:type "submit"}
          "Ask"]])]))
