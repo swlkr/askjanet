@@ -10,7 +10,6 @@
   [:post "/accounts" :account/create]
   [:delete "/sessions" :session/destroy]
 
-  [:get "/questions" :question/index]
   [:get "/questions/new" :question/new]
   [:post "/questions" :question/create]
   [:get "/questions/:id" :question/show]
