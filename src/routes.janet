@@ -8,6 +8,7 @@
   [:get "/auth-codes/:auth-code" :session/create]
   [:get "/join" :account/new]
   [:post "/accounts" :account/create]
+  [:delete "/sessions" :session/destroy]
 
   [:get "/questions" :question/index]
   [:get "/questions/new" :question/new]
