@@ -9,7 +9,7 @@
   [:vstack {:spacing "l" :stretch "" :align-x "center" :align-y "center"}
    [:spacer]
    [:div {:style "width: 300px"}
-    [:img {:src "/camping_flatline.svg"}]]
+    (svg "camping_flatline")]
    (form-with request {:method "POST" :id "form" :action "/auth-codes" :x-data "signupForm()" :style "width: 100%; max-width: 450px"}
     [:vstack {:spacing "m"}
      [:vstack {:spacing "l"}
