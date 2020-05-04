@@ -2,7 +2,7 @@
 (import json)
 (import ./src/mailgun)
 
-(db/connect)
+(db/connect (env :database-url))
 
 (repl nil
       (fn [_ y] (printf "%Q" y))
