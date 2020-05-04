@@ -1,5 +1,5 @@
-(import joy :prefix "")
-(import ../helpers :prefix "")
+(use joy)
+(use ../helpers)
 
 
 (defn index [request]
