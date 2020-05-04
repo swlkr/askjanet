@@ -50,7 +50,7 @@
         Y (date :year)
         HH (date :hours)
         MM (date :minutes)]
-    (string/format "%d/%.2d/%.2d at %.2d:%.2d"
+    (string/format "%.2d/%.2d/%.2d at %.2d:%.2d"
                    M D Y HH MM)))
 
 
