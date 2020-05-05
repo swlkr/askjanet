@@ -12,12 +12,13 @@
 
 (defn form [request route &opt question answer]
   [:vstack {:spacing "l"}
-   (form-for [request :answer/create {:question-id (get question :id) :id (get answer :id)}]
+   (form-for [request route {:question-id (get question :id) :id (get answer :id)}]
      [:vstack {:spacing "l"}
       [:vstack {:spacing "xs"}]
 
       [:vstack {:spacing "xs"}
-       [:textarea {:rows 10 :name "body"}]
+       [:textarea {:rows 10 :name "body"}
+        (get answer :body)]
        [:div (get-in request [:errors :title])]]
 
       [:button {:type "submit"}
