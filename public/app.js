@@ -36,20 +36,20 @@ function toggleDarkMode() {
           })
 };
 
-function app() {
-  var startTheme = document.getElementsByTagName('html')[0].dataset.startTheme;
-  var initialScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  var colorScheme = startTheme || initialScheme;
-  var darkMode = colorScheme === 'dark';
+function app(savedColorScheme) {
+  var colorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark-mode' : 'light-mode';
+  if(savedColorScheme !== "") {
+    colorScheme = savedColorScheme;
+  }
 
   return {
     modalOpen: false,
     action: '',
     colorScheme: colorScheme,
-    darkMode: darkMode,
 
     toggleColorScheme: function() {
-      this.darkMode = !this.darkMode;
+      this.colorScheme = (this.colorScheme === 'dark-mode' ? 'light-mode' : 'dark-mode');
+
       window.toggleDarkMode();
     }
   };

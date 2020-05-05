@@ -17,9 +17,9 @@
          [:input {:type "submit" :value "Sign out"}])
        [:a {:href "javascript://" :@click "toggleColorScheme()"
             :role "button"}
-        [:div {:x-show "darkMode"}
+        [:div {:x-show "colorScheme === 'dark-mode'"}
          (svg "moon")]
-        [:div {:x-show "!darkMode" :style "color: #ff8a00"}
+        [:div {:x-show "colorScheme === 'light-mode'" :style "color: #ff8a00"}
          (svg "brightness-high-fill")]]]
 
       [:hstack {:spacing "m"}
@@ -31,9 +31,9 @@
         "Join"]
        [:a {:href "javascript://" :@click "toggleColorScheme()"
             :role "button"}
-        [:div {:x-show "darkMode"}
+        [:div {:x-show "colorScheme === 'dark-mode'"}
          (svg "moon")]
-        [:div {:x-show "!darkMode" :style "color: #ff8a00"}
+        [:div {:x-show "colorScheme === 'light-mode'" :style "color: #ff8a00"}
          (svg "brightness-high-fill")]]])]
    [:spacer]])
 
@@ -54,20 +54,20 @@
 
 (defn layout [{:request request :body body}]
   (let [dark-mode (get-in request [:account :dark-mode])
-        start-theme (cond
-                      (nil? dark-mode) nil
-                      (one? dark-mode) "dark"
-                      :else "light")]
+        color-scheme (cond
+                       (nil? dark-mode) ""
+                       (one? dark-mode) "dark-mode"
+                       :else "light-mode")]
    (text/html
      (doctype :html5)
-     [:html {:lang "en" :data-start-theme start-theme :data-theme "light" :x-bind:data-theme "darkMode ? 'dark' : 'light'" :x-data "app()"}
+     [:html {:lang "en" :x-data (string "app('" color-scheme "')")}
       [:head
        [:title "ask janet"]
        [:meta {:name "csrf-token" :content (authenticity-token request)}]
        [:meta {:charset "utf-8"}]
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
        (css "/pylon.css" "/app.css")]
-      [:body {:@keydown.escape.prevent "modalOpen = false"}
+      [:body {:@keydown.escape.prevent "modalOpen = false" :x-bind:class "colorScheme"}
         (menu request)
         body
        (confirm-modal request)
