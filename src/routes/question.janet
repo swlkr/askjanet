@@ -58,7 +58,7 @@
        (let [answerer (db/find :account (answer :account-id))]
          [:aside
           [:vstack {:spacing "m"}
-           [:div (raw (moondown/render (markdown/escape (answer :body))))]
+           [:div (raw (moondown/render (answer :body)))]
            [:vstack {:align-y "bottom"}
             [:hstack {:spacing "xs" :stretch ""}
              [:hstack {:spacing "xs"}
