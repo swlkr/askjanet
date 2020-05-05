@@ -1,4 +1,5 @@
 (import joy :prefix "")
+(import ./routes/vote :as vote)
 
 (defroutes app
   [:get "/" :home/index]
@@ -21,4 +22,6 @@
   [:post "/questions/:question-id/answers" :answer/create]
   [:get "/questions/:question-id/answers/:id/edit" :answer/edit]
   [:patch "/questions/:question-id/answers/:id" :answer/patch]
-  [:delete "/questions/:question-id/answers/:id" :answer/destroy])
+  [:delete "/questions/:question-id/answers/:id" :answer/destroy]
+
+  [:post "/api/questions/:question-id/votes" :vote/toggle])

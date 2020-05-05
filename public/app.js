@@ -78,6 +78,9 @@ function voter(url, voted, votes) {
                 } else if (response.voted) {
                   self.voted = true;
                   self.votes = self.votes + 1;
+                } else if (response.downvoted) {
+                  self.voted = false;
+                  self.votes = self.votes - 1;
                 }
               })
               .catch(function(err) {

@@ -1,5 +1,6 @@
 (use joy)
 (use ../helpers)
+(import json)
 
 
 (defn index [request]
@@ -17,7 +18,12 @@
        (let [votes (get all-votes (q :id) [])
              answers (get all-answers (q :id) [])]
          [:hstack {:spacing "m"
-                   :x-data (string/format "voter('/api/questions/%d/votes', %s, %d)" (q :id) (if (empty? votes) "false" "true") (length votes))}
+                   :x-data (string/format "voter('%s', %s, %d)"
+                                          (url-for :vote/toggle {:question-id (q :id)})
+                                          (if (empty? (filter |(= (get account :id)  (get $ :account-id)) votes))
+                                            "false"
+                                            "true")
+                                          (length votes))}
           [:vstack {:align-x "center" :align-y "top"}
            [:a {:href "#"
                 :@click.prevent "vote()"

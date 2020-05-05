@@ -20,6 +20,7 @@
                (extra-methods ?)
                (query-string ?)
                (body-parser ?)
+               (json-body-parser ?)
                (server-error ?)
                (x-headers ?)
                (logger ?)
