@@ -15,4 +15,10 @@
   [:get "/questions/:id" :question/show]
   [:get "/questions/:id/edit" :question/edit]
   [:patch "/questions/:id" :question/patch]
-  [:delete "/questions/:id" :question/destroy])
+  [:delete "/questions/:id" :question/destroy]
+
+  [:get "/questions/:question-id/answers/new" :answer/new]
+  [:post "/questions/:question-id/answers" :answer/create]
+  [:get "/questions/:question-id/answers/:id/edit" :answer/edit]
+  [:patch "/questions/:question-id/answers/:id" :answer/patch]
+  [:delete "/questions/:question-id/answers/:id" :answer/destroy])

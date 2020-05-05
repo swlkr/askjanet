@@ -31,7 +31,7 @@
         [:h2 {:style "margin-top: 0" :responsive ""}
           (question :title)]
         (when (question :body)
-          [:div (raw (moondown/render (markdown/escape (question :body))))])
+          [:div (raw (moondown/render (question :body)))])
         [:vstack {:align-y "bottom" :spacing "m"}
          [:hstack {:spacing "l"}
           [:hstack {:spacing "xs"}
