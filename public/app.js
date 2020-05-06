@@ -1,3 +1,17 @@
+window.matchMedia("(prefers-color-scheme: dark)").addListener(toggleTheme);
+
+function toggleTheme(e) {
+  if(e.matches) {
+    // dark mode
+    document.body.classList.remove('light-mode');
+    document.body.classList.add('dark-mode');
+  } else {
+    // light mode
+    document.body.classList.remove('dark-mode');
+    document.body.classList.add('light-mode');
+  }
+}
+
 var api = function(url, options) {
   var options = options || {};
   options.headers = options.headers || {};

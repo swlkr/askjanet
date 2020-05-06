@@ -66,6 +66,8 @@
        [:meta {:name "csrf-token" :content (authenticity-token request)}]
        [:meta {:charset "utf-8"}]
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
+       [:link {:rel "stylesheet" :href "/dark.css" :media "(prefers-color-scheme: no-preference), (prefers-color-scheme: dark)"}]
+       [:link {:rel "stylesheet" :href "/light.css" :media "(prefers-color-scheme: light)"}]
        (css "/pylon.css" "/app.css")]
       [:body {:@keydown.escape.prevent "modalOpen = false" :x-bind:class "colorScheme"}
         (menu request)
