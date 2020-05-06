@@ -50,4 +50,4 @@
                [:strong "upvotes"]]]
              [:hstack {:spacing "xs"}
               [:div (datestring (q :created-at))]
-              [:div (get-in all-accounts [(q :account-id) :name])]]]]]]))]))
+              [:div (get-in all-accounts [(q :account-id) 0 :name])]]]]]]))]))
