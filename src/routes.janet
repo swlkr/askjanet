@@ -28,3 +28,4 @@
   [:delete "/questions/:question-id/answers/:id" :answer/destroy]
 
   [:post "/api/questions/:question-id/votes" :vote/toggle])
+  [:post "/api/answers/:id/votes" :vote/toggle-answer])

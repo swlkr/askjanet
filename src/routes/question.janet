@@ -12,10 +12,12 @@
      [:div "None so far. Be the first!"])
 
    (foreach [answer answers]
-     (let [answerer (db/find :account (answer :account-id))]
+     (let [answerer (db/find :account (answer :account-id))
+           votes (db/fetch-all [:answer answer :answer-vote])]
        [:vstack {:spacing "m"}
         [:hstack {:spacing "m"}
-         [:vstack {:align-x "center" :align-y "top" :x-data "{voted: false, votes: 0}"}
+         [:vstack {:align-x "center" :align-y "top" :x-data "{voted: false, votes: 0}"
+                   :x-data (string/format "voter('/api/answers/%d/votes', %s, %d)" (answer :id) (if (empty? votes) "false" "true") (length votes))}
           [:a {:href "#"
                :@click.prevent "vote()"
                :tabindex "0"
