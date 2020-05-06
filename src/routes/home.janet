@@ -19,7 +19,7 @@
              answers (get all-answers (q :id) [])]
          [:hstack {:spacing "m"
                    :x-data (string/format "voter('%s', %s, %d)"
-                                          (url-for :vote/toggle {:question-id (q :id)})
+                                          (url-for :vote/toggle q)
                                           (if (empty? (filter |(= (get account :id)  (get $ :account-id)) votes))
                                             "false"
                                             "true")
