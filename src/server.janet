@@ -22,7 +22,7 @@
                (not-found ? not-found-fn)
                (current-account ?)
                (csrf-token ?)
-               (session ?)
+               (session ? {"Max-Age" "604800"})
                (extra-methods ?)
                (query-string ?)
                (body-parser ?)
