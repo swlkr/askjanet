@@ -76,4 +76,4 @@
 
       (if (nil? vote)
         (answer-up answer account)
-        (down vote)))))
+        (answer-down vote)))))
