@@ -12,14 +12,14 @@ function toggleTheme(e) {
   }
 }
 
-var api = function(url, options) {
+function api(url, options) {
   var options = options || {};
   options.headers = options.headers || {};
   if(options.method.toLowerCase() !== 'get') {
     options['headers']['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').content;
   }
 
-  return window.fetch(url, options);
+  return fetch(url, options);
 }
 
 function signupForm() {
