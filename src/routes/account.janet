@@ -74,7 +74,8 @@
 (defn show [request]
   (when-let [account (request :account)
              questions (db/fetch-all [:account account :question])
-             answers (db/fetch-all [:account account :answer])]
+             answers (db/fetch-all [:account account :answer])
+             votes (db/fetch-all [:account account :vote])]
      [:vstack {:spacing "l"}
 
       [:h2 "Stats"]
@@ -85,7 +86,12 @@
 
        [:vstack
         [:h2 (length questions)]
-        [:div "Questions"]]]
+        [:div "Questions"]]
+
+       [:vstack
+        [:h2 (length votes)]
+        [:div "Votes"]]]
+
 
       [:h2 "Delete your account"]
       [:div ```Deleting your account does not delete any questions, answers or votes you have made.
