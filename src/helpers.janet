@@ -4,7 +4,7 @@
 
 (def domain "askjanet.xyz")
 (def from-email "askjanet <sean@askjanet.xyz>")
-(def base-url (if development? "http://localhost:8080/" "https://askjanet.xyz/"))
+(def base-url (if development? "http://localhost:8000/" "https://askjanet.xyz/"))
 
 
 (defn auth-code []
