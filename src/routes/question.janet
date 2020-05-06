@@ -4,6 +4,48 @@
 (import moondown)
 
 
+(defn answer-list [account question answers]
+  [:vstack {:spacing "m"}
+   [:h2 "Answers"]
+
+   (when (empty? answers)
+     [:div "None so far. Be the first!"])
+
+   (foreach [answer answers]
+     (let [answerer (db/find :account (answer :account-id))]
+       [:vstack {:spacing "m"}
+        [:hstack {:spacing "m"}
+         [:vstack {:align-x "center" :align-y "top" :x-data "{voted: false, votes: 0}"}
+          [:a {:href "#"
+               :@click.prevent "vote()"
+               :tabindex "0"
+               :role "button"
+               :aria-label "upvote"}
+            [:span {:x-show "!voted"}
+             (svg "caret-up")]
+            [:span {:x-show "voted"}
+             (svg "caret-up-fill")]]
+          [:div {:x-text "votes"}]]
+         [:aside {:stretch ""}
+          [:div (raw (moondown/render (answer :body)))]
+          [:vstack {:align-y "bottom"}
+           [:hstack {:spacing "xs" :stretch ""}
+            [:hstack {:spacing "xs"}
+             [:div (datestring (answer :created-at))]
+             [:div (answerer :name)]]
+            [:spacer]
+            (when (= (get account :id) (answer :account-id))
+              [:hstack {:spacing "m"}
+               [:a {:href (url-for :answer/edit {:question-id (question :id) :id (answer :id)})}
+                 "Edit"]
+               [:a {:href "#" :@click (string/format "action = '/questions/%d/answers/%d'; modalOpen = true" (question :id) (answer :id))}
+                 "Delete"]])]]]]]))
+
+   [:hstack {:align-x "right"}
+    [:a {:href (string "/questions/" (question :id) "/answers/new")}
+     [:button "Answer"]]]])
+
+
 (defn show [request]
   (let [params (request :params)
         question (db/find :question (params :id))
@@ -26,7 +68,7 @@
          [:span {:x-show "voted"}
           (svg "caret-up-fill")]]
        [:div {:x-text "votes"}]]
-      [:aside
+      [:aside {:stretch ""}
        [:vstack {:spacing "l"}
         [:h2 {:style "margin-top: 0" :responsive ""}
           (question :title)]
@@ -49,33 +91,7 @@
             [:a {:href (url-for :question/edit question)}
              "Edit question"])]]]]]
 
-     [:h2 "Answers"]
-
-     (when (empty? answers)
-       [:div "None so far. Be the first!"])
-
-     (foreach [answer answers]
-       (let [answerer (db/find :account (answer :account-id))]
-         [:aside
-          [:vstack {:spacing "m"}
-           [:div (raw (moondown/render (answer :body)))]
-           [:vstack {:align-y "bottom"}
-            [:hstack {:spacing "xs" :stretch ""}
-             [:hstack {:spacing "xs"}
-              [:div (datestring (answer :created-at))]
-              [:div (answerer :name)]]
-             [:spacer]
-             (when (= (get account :id) (answer :account-id))
-               [:hstack {:spacing "m"}
-                [:a {:href (string/format "/questions/%d/answers/%d/edit" (question :id) (answer :id))}
-                  "Edit"]
-                [:a {:href "#" :@click (string/format "action = '/questions/%d/answers/%d'; modalOpen = true" (question :id) (answer :id))}
-                  "Delete"]])]]]]))
-
-
-     [:hstack
-      [:a {:href (string "/questions/" (question :id) "/answers/new")}
-       [:button "Answer"]]]]))
+     (answer-list account question answers)]))
 
 
 (defn form [request route &opt question]
