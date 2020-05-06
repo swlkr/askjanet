@@ -85,7 +85,8 @@
   (when-let [account (request :account)
              questions (db/fetch-all [:account account :question])
              answers (db/fetch-all [:account account :answer])
-             votes (db/fetch-all [:account account :vote])]
+             votes (db/fetch-all [:account account :vote])
+             answer-votes (db/fetch-all [:account account :answer-vote])]
      [:vstack {:spacing "l"}
 
       [:h2 "Stats"]
@@ -99,7 +100,7 @@
         [:div "Questions"]]
 
        [:vstack
-        [:h2 (length votes)]
+        [:h2 (+ (length votes) (length answer-votes))]
         [:div "Votes"]]]
 
 
