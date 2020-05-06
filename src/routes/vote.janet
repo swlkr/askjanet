@@ -36,6 +36,6 @@
       (-> (application/json {:url "/join"})
           (put :status 401))
 
-      (if (not vote)
+      (if (nil? vote)
         (up question account)
         (down vote)))))
