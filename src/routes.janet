@@ -10,6 +10,8 @@
   [:get "/join" :account/new]
   [:post "/accounts" :account/create]
   [:delete "/sessions" :session/destroy]
+  [:get "/profile" :account/show]
+  [:delete "/accounts" :account/destroy]
 
   [:get "/questions/new" :question/new]
   [:post "/questions" :question/create]

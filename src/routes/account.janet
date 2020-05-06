@@ -2,6 +2,7 @@
 (use ../helpers)
 
 (import ../mailgun)
+(import cipher)
 
 
 (defn new [request]
@@ -64,3 +65,39 @@
       (def account (db/insert :account (merge {:email email :name name :dark-mode 1} (auth-code-params))))
       (emails/join account)
       (redirect-to :auth-code/success))))
+
+
+(defn rando []
+  (cipher/bin2hex (os/cryptorand 5)))
+
+
+(defn show [request]
+  (when-let [account (request :account)
+             questions (db/fetch-all [:account account :question])
+             answers (db/fetch-all [:account account :answer])]
+     [:vstack {:spacing "l"}
+
+      [:h2 "Stats"]
+      [:hstack {:spacing "m"}
+       [:vstack
+        [:h2 (length answers)]
+        [:div "Answers"]]
+
+       [:vstack
+        [:h2 (length questions)]
+        [:div "Questions"]]]
+
+      [:h2 "Delete your account"]
+      [:div ```Deleting your account does not delete any questions, answers or votes you have made.
+             Instead, it changes your username to "deleted user"
+             After deleting you will NOT be able to recover any questions, answers or votes you made in the past.```]
+      [:a {:href "#" :@click.prevent "action = '/accounts'; modalOpen = true"}
+       "Delete"]]))
+
+
+(defn destroy [request]
+  (when-let [account (request :account)
+             deleted-username (string "deleted user " (rando))]
+    (db/update :account account {:email (string deleted-username "@example.com") :deleted-at (os/time) :name deleted-username})
+    (-> (redirect-to :home/index)
+        (put :session @{}))))
