@@ -48,12 +48,13 @@
      [:button "Answer"]]]])
 
 
+
 (defn show [request]
   (let [params (request :params)
         question (db/find :question (params :id))
         account (request :account)
         asker (db/find :account (question :account-id))
-        answers (db/fetch-all [:question question :answer])
+        answers (db/query (slurp "db/sql/answers-with-votes.sql") [(question :id)])
         votes (db/fetch-all [:question question :vote])
         acct (db/find :account (question :account-id))]
     [:vstack {:spacing "l"}
