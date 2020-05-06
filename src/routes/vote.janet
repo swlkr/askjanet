@@ -28,7 +28,7 @@
 (defn toggle [request]
   (when-let [account (request :account)
              params (request :params)
-             question (db/find :question (params :question-id))]
+             question (db/find :question (params :id))]
 
     (def vote (db/find-by :vote :where {:question-id (question :id) :account-id (account :id)}))
 
