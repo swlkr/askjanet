@@ -19,13 +19,13 @@
 
         [:vstack {:spacing "xs"}
          [:label "your new username"]
-         [:input {:type "text" :name "name"}]
-         [:div (get-in request [:errors :name])]]
+         [:input {:type "text" :name "name" :value (get-in request [:body :name])}]
+         [:div {:class "red"} (get-in request [:errors :name])]]
 
         [:vstack {:spacing "xs"}
          [:label "your email"]
-         [:input {:type "email" :name "email" :id "email" :x-model "email"}]
-         [:div (get-in request [:errors :email])]]]
+         [:input {:type "email" :name "email" :id "email" :x-model "email" :value (get-in request [:body :email])}]
+         [:div {:class "red"} (get-in request [:errors :email])]]]
 
        [:button {:type "submit" :id "submit" :x-bind:disabled "disabled()"}
         "Join"]])]])
@@ -54,17 +54,27 @@
     (put-in request [:errors :name] "Name can't be blank"))
 
   (when (blank? email)
-    (put-in request [:errors :email] "Email can't be blank"))
+    (put-in request [:errors :email] "Email is invalid"))
 
   (unless (username? name)
     (put-in request [:errors :name] "Name can only have letters, numbers, dashes and underscores"))
 
   (if (request :errors)
     (new request)
-    (do
-      (def account (db/insert :account (merge {:email email :name name :dark-mode 1} (auth-code-params))))
-      (emails/join account)
-      (redirect-to :auth-code/success))))
+    (try
+      (do
+        (def account (db/insert :account (merge {:email email :name name :dark-mode 1} (auth-code-params))))
+        (emails/join account)
+        (redirect-to :auth-code/success))
+      ([err fib]
+       (cond
+         (= "UNIQUE constraint failed: account.email" err)
+         (new (put-in request [:errors :email] "Email is invalid"))
+
+         (= "UNIQUE constraint failed: account.name" err)
+         (new (put-in request [:errors :name] "Name is invalid"))
+
+         :else (propagate err fib))))))
 
 
 (defn rando []
