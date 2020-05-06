@@ -10,10 +10,16 @@
     (handler (put request :account account))))
 
 
+(defn not-found-fn [request]
+  (layout/layout {:request request
+                  :body [:center
+                         [:h1 "Oops! 404!"]]}))
+
+
 (def app (as-> routes/app ?
                (handler ?)
                (layout ? layout/layout)
-               (not-found ?)
+               (not-found ? not-found-fn)
                (current-account ?)
                (csrf-token ?)
                (session ?)
