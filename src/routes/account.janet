@@ -117,3 +117,14 @@
     (db/update :account account {:email (string deleted-username "@example.com") :deleted-at (os/time) :name deleted-username})
     (-> (redirect-to :home/index)
         (put :session @{}))))
+
+
+(defn toggle-dark-mode [request]
+  (def account (request :account))
+
+  (if (nil? account)
+    (application/json {:status 404 :message "Join to save your dark mode preferences!"})
+
+    (let [new-dark-mode (if (one? (account :dark-mode)) 0 1)]
+      (db/update :account account {:dark-mode new-dark-mode})
+      (application/json {:status "success"}))))

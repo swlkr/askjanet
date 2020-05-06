@@ -12,6 +12,7 @@
   [:delete "/sessions" :session/destroy]
   [:get "/profile" :account/show]
   [:delete "/accounts" :account/destroy]
+  [:post "/api/toggle-dark-mode" :account/toggle-dark-mode]
 
   [:get "/questions/new" :question/new]
   [:post "/questions" :question/create]
