@@ -20,7 +20,7 @@ This is a hex encoded [cipher](https://github.com/joy-framework/cipher) encrypti
 ```clojure
 (import cipher)
 
-(cipher/bin2hex (cipher/encryption-key))
+(cipher/encryption-key)
 ```
 
 The rest of the `<>` stuff is largely up to you.
