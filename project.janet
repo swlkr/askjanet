@@ -1,13 +1,13 @@
 (declare-project
   :name "askjanet"
-  :description ""
+  :description "A q&a site for janet"
   :dependencies ["https://github.com/joy-framework/joy"
                  "https://github.com/joy-framework/http"
                  "https://github.com/joy-framework/moondown"]
-  :author ""
-  :license ""
-  :url ""
-  :repo "")
+  :author "swlkr"
+  :license "MIT"
+  :url "https://askjanet.xyz"
+  :repo "https://github.com/swlkr/askjanet")
 
 (declare-executable
   :name "askjanet"
