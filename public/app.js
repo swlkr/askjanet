@@ -103,3 +103,34 @@ function voter(url, voted, votes) {
     }
   }
 }
+
+function settings(url, initDailySummary) {
+  return {
+    dailySummary: initDailySummary,
+    error: '',
+
+    update: function() {
+      self = this;
+      this.dailySummary = this.dailySummary ? 0 : 1;
+
+      return api(url, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body:  JSON.stringify({
+          _method: "patch",
+          "daily-summary": self.dailySummary.toString()
+        })
+      })
+      .then(function(response) {
+        return response.json()
+      })
+      .then(function(response) {})
+      .catch(function(err) {
+        self.dailySummary = initDailySummary;
+        self.error = "Something went wrong :(";
+      })
+    }
+  }
+}

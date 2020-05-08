@@ -103,13 +103,38 @@
         [:h2 (+ (length votes) (length answer-votes))]
         [:div "Votes"]]]
 
+      [:h2 "Settings"]
+      [:div {:x-data (string/format "settings('%s', %d)" (url-for :account/patch) (account :daily-summary))}
+       (form-for [request :account/patch account]
+         [:vstack {:spacing "m"}
+          [:hstack
+           [:input (merge {:type "checkbox" :name "daily-summary" :value 1
+                           :x-on:click.debounce "update()"
+                           :x-bind:checked "dailySummary"}
+                          (if (one? (account :daily-summary))
+                            {:checked ""}
+                            {}))]
+           [:label {:for "daily-summary" :style "margin-left: 5px"} "Send me a daily summary email of my answered questions"]]
+
+          [:noscript
+           [:button {:type "submit"}
+            "Save settings"]]])]
 
       [:h2 "Delete your account"]
-      [:div ```Deleting your account does not delete any questions, answers or votes you have made.
-             Instead, it changes your username to "deleted user"
-             After deleting you will NOT be able to recover any questions, answers or votes you made in the past.```]
+      [:div "Deleting your account does not delete any questions, answers or votes you have made."]
+      [:div "Instead, it changes your username to \"deleted user\""]
+      [:div "After deleting you will NOT be able to recover any questions, answers or votes you made in the past."]
       [:a {:href "#" :@click.prevent "action = '/accounts'; modalOpen = true"}
        "Delete"]]))
+
+
+(defn patch [request]
+  (when-let [account (request :account)
+             body (request :body)]
+    (db/update :account account {:daily-summary (scan-number (or (body :daily-summary) "0"))})
+    (if (json? request)
+      (application/json {:status "ok"})
+      (redirect-to :account/show account))))
 
 
 (defn destroy [request]

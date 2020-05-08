@@ -11,6 +11,7 @@
   [:post "/accounts" :account/create]
   [:delete "/sessions" :session/destroy]
   [:get "/profile" :account/show]
+  [:patch "/accounts" :account/patch]
   [:delete "/accounts" :account/destroy]
   [:post "/api/toggle-dark-mode" :account/toggle-dark-mode]
 
