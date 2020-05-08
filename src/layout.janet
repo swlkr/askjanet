@@ -39,7 +39,7 @@
 
 
 (defn confirm-modal [request]
-  [:div {:class "md-modal" ::class "{'md-show': modalOpen}" :x-show "modalOpen" :@click.away "modalOpen = false"}
+  [:div {:class "md-modal iff-javascript-enabled" ::class "{'md-show': modalOpen}" :x-show "modalOpen" :@click.away "modalOpen = false"}
    [:div {:class "md-content"}
     [:vstack {:align-x "center"}
      [:h3 "Are you sure?"]
@@ -68,6 +68,9 @@
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
        [:link {:rel "stylesheet" :href "/dark.css" :media "(prefers-color-scheme: no-preference), (prefers-color-scheme: dark)"}]
        [:link {:rel "stylesheet" :href "/light.css" :media "(prefers-color-scheme: light)"}]
+       [:noscript
+        [:style
+         ".iff-javascript-enabled { display: none; }"]]
        (css "/pylon.css" "/app.css")]
       [:body {:@keydown.escape.prevent "modalOpen = false" :x-bind:class "colorScheme"}
         (menu request)
