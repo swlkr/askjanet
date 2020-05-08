@@ -3,6 +3,7 @@
   :description "A q&a site for janet"
   :dependencies ["https://github.com/joy-framework/joy"
                  "https://github.com/joy-framework/http"
+                 "https://github.com/joy-framework/dotenv"
                  "https://github.com/joy-framework/moondown"]
   :author "swlkr"
   :license "MIT"
