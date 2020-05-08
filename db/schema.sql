@@ -7,7 +7,7 @@ CREATE TABLE account (
   code_expires_at integer,
   created_at integer not null default(strftime('%s', 'now')),
   updated_at integer
-, deleted_at integer, dark_mode integer)
+, deleted_at integer, dark_mode integer, daily_summary boolean not null default (0))
 CREATE TABLE question (
   id integer primary key,
   title text not null,
