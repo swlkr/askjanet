@@ -3,6 +3,7 @@
 
 (defroutes app
   [:get "/" :home/index]
+  [:get "/open" :home/open]
   [:get "/check-your-email" :auth-code/success]
   [:get "/sign-in" :auth-code/new]
   [:post "/auth-codes" :auth-code/create]

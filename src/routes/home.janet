@@ -51,3 +51,38 @@
              [:hstack {:spacing "xs"}
               [:div (datestring (q :created-at))]
               [:div (get-in all-accounts [(q :account-id) 0 :name])]]]]]]))]))
+
+
+(defn open [request]
+  (let [questions (first (db/query "select count(id) as questions from question"))
+        answers (first (db/query "select count(id) as answers from answer"))
+        accounts (first (db/query "select count(id) as accounts from account"))
+        votes (first (db/query "select count(id) as votes from vote"))
+        answer-votes (first (db/query "select count(id) as votes from answer_vote"))
+        votes {:votes (+ (or (get answer-votes :votes) 0) (or (get votes :votes) 0))}
+        counts (merge questions answers accounts votes)]
+    [:vstack
+     [:div
+      [:h2 "/open"]
+      [:p "askjanet is an open project which means I share all the stats with everyone!"]]
+
+     [:hstack {:spacing "m" :responsive ""}
+      [:vstack
+       [:h2 (get counts :accounts)]
+       [:div "Accounts"]]
+
+      [:vstack
+       [:h2 (get counts :questions)]
+       [:div "Questions"]]
+
+      [:vstack
+       [:h2 (get counts :answers)]
+       [:div "Answers"]]
+
+      [:vstack
+       [:h2 (get counts :votes)]
+       [:div "Votes"]]
+
+      [:vstack
+       [:h2 "Not tracked yet :("]
+       [:div "Pageviews"]]]]))

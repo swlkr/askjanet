@@ -646,8 +646,10 @@ aside {
 }
 
 
-hstack[responsive] {
-  flex-direction: column;
+@media (max-width: 415px) {
+  hstack[responsive] {
+    display: block;
+  }
 }
 
 h2[responsive] {

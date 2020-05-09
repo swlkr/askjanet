@@ -10,6 +10,9 @@
     [:spacer]
     (if (request :account)
       [:hstack {:spacing "m"}
+       [:a {:href "/open"
+            :role "button"}
+        "Open"]
        [:a {:href "/profile"
             :role "button"}
         "Profile"]
